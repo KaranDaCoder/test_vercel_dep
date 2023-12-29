@@ -3,6 +3,9 @@ import React, { useState } from 'react'
 import { ChevronDown, ChevronUp } from '@/components/svgs/AllSvgs';
 import { useRouter } from 'next/navigation';
 
+
+
+
 const Add = () => {
   const router = useRouter();
  const [txDoneModal, setTxDoneModal] = useState(true);
@@ -16,6 +19,9 @@ const Add = () => {
  const [tx_paid, setTxPaid] = useState('Capital One Ending 3344');
  const [tx_status, setTxStatus] = useState('Completed');
  const [tx_desc, setTxDesc] = useState('');
+ const [tx_category, setTxCategory] = useState('other')
+
+  
 
 
 const handleCancelExpense = (e) => {
@@ -31,6 +37,20 @@ const handleCancelExpense = (e) => {
  
 }
 
+const grooming = ['great clips', 'haircut' , 'sp'];
+const grocery = ['poornanand Foods', 'poornanand' , 'Indian Store' , 'Walmart'];
+
+const updateCategory = (e) => {
+ setTxName(e.target.value)
+ if (grooming.includes(e.target.value)) {
+   setTxCategory('grooming');
+ } else if (grocery.includes(e.target.value)) {
+   setTxCategory('grocery');
+ } else {
+   setTxCategory('other');
+ }
+  console.log(e.target.value)
+}
  const handleAddExpense = async (e) => {
   e.preventDefault();
    const create_expense_obj = {
@@ -41,26 +61,27 @@ const handleCancelExpense = (e) => {
      tx_paid,
      tx_status,
      tx_desc,
+     tx_category
    };
    console.log(JSON.stringify(create_expense_obj));
-   try {
-     const request = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/expenses`, {method : 'POST' , cache: 'no-store' , body: JSON.stringify(create_expense_obj)});
-      if (!request.ok) {
-      console.log(request.statusText);
-       setSuccessMsg(false);
-       setErrorMsg(true);
-       return;
-    }
-    setSuccessMsg(true);
-    setErrorMsg(false);
-    router.refresh();
+  //  try {
+  //    const request = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/expenses`, {method : 'POST' , cache: 'no-store' , body: JSON.stringify(create_expense_obj)});
+  //     if (!request.ok) {
+  //     console.log(request.statusText);
+  //      setSuccessMsg(false);
+  //      setErrorMsg(true);
+  //      return;
+  //   }
+  //   setSuccessMsg(true);
+  //   setErrorMsg(false);
+  //   router.refresh();
    
 
-   } catch (error) {
-     console.log(error);
-      setSuccessMsg(false);
-      setErrorMsg(true);
-   }
+  //  } catch (error) {
+  //    console.log(error);
+  //     setSuccessMsg(false);
+  //     setErrorMsg(true);
+  //  }
  }
   return (
     <div className='flex items-center justify-center w-full h-full p-2 bg-slate-700'>
@@ -73,14 +94,19 @@ const handleCancelExpense = (e) => {
             <input
               type='search'
               placeholder='Name'
-              className='w-3/4 h-auto px-2 border-b outline-none border-fuchsia-900 placeholder:text-sm placeholder:italic'
+              className='w-3/4 h-auto px-2 border-b outline-none border-b-fuchsia-900 placeholder:text-sm placeholder:italic'
               required={true}
               minLength={2}
               maxLength={50}
               value={tx_name}
-              onChange={(e) => setTxName(e.target.value)}
+              onChange={(e) => {updateCategory(e)}}
             />
-
+            <select name="" id="" value={tx_category} onChange={(e) => setTxCategory(e.target.value)}>
+              <option value="grocery" >Grocery</option>
+              <option value="grooming">Grooming</option>
+              <option value="travel">Travel</option>
+              <option value="other">Other</option>
+            </select>
             <div className='flex items-center justify-between w-3/4 h-auto gap-4'>
               <input
                 type='date'

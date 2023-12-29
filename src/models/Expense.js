@@ -17,6 +17,7 @@ const ExpenseSchema = new Schema(
     tx_state: {
       type: String,
       required: true,
+      uppercase:true,
       default: 'MN',
     },
     tx_paid: {
@@ -48,6 +49,10 @@ const ExpenseSchema = new Schema(
       type: Date,
       required: [true, 'Problem! Transaction Date cannot be empty'],
     },
+    tx_category: {
+      type: String,
+      
+    }
   },
   { timestamps: true, toJSON: { getters: true } }
 );
