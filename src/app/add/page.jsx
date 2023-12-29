@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation';
 
 const Add = () => {
   const router = useRouter();
- const [txDoneModal, setTxDoneModal] = useState(false);
- const [tx_statusModal, setTxStatusModal] = useState(false);
+ const [txDoneModal, setTxDoneModal] = useState(true);
+ const [tx_statusModal, setTxStatusModal] = useState(true);
  const [successMsg, setSuccessMsg] = useState(false);
  const [errorMsg, setErrorMsg] = useState(false);
  const [tx_name, setTxName] = useState('');
@@ -63,17 +63,17 @@ const handleCancelExpense = (e) => {
    }
  }
   return (
-    <div className='flex justify-center w-full h-full p-2'>
-      <div className='flex justify-center w-full h-full border shadow-xl lg:w-1/2 rounded-xl'>
-        <form className='flex flex-col w-full h-full gap-8 lg:py-4'>
-          <h2 className='text-2xl font-semibold text-center uppercase'>
+    <div className='flex items-center justify-center w-full h-full p-2 bg-slate-700'>
+      <div className='flex items-start justify-start w-full h-full bg-white shadow-2xl lg:w-1/2 rounded-2xl'>
+        <form className='flex flex-col items-start justify-center w-full h-full gap-4'>
+          <h2 className='w-full text-2xl font-semibold text-center uppercase lg:text-2xl'>
             Add new Expense
           </h2>
-          <div className='flex flex-col items-center justify-center w-full h-auto gap-6'>
+          <div className='flex flex-col items-center justify-center w-full h-auto gap-4'>
             <input
               type='search'
               placeholder='Name'
-              className='w-3/4 h-12 px-2 border rounded-md outline-none placeholder:text-sm placeholder:italic'
+              className='w-3/4 h-auto px-2 border-b outline-none border-fuchsia-900 placeholder:text-sm placeholder:italic'
               required={true}
               minLength={2}
               maxLength={50}
@@ -84,7 +84,7 @@ const handleCancelExpense = (e) => {
             <div className='flex items-center justify-between w-3/4 h-auto gap-4'>
               <input
                 type='date'
-                className='w-full h-10 text-center border-b outline-none lg:w-1/2'
+                className='w-full h-auto text-center border-b outline-none border-fuchsia-900 lg:w-1/2'
                 placeholder='mm-dd-yyyy'
                 min='01-31-1990'
                 max='12-31-2030'
@@ -93,9 +93,9 @@ const handleCancelExpense = (e) => {
               />
               <input
                 type='number'
-                className='w-1/2 h-10 px-2 border rounded-md outline-none placeholder:text-sm placeholder:italic'
+                className='w-1/2 h-auto px-2 border-b outline-none border-fuchsia-900 placeholder:text-sm placeholder:italic'
                 placeholder='$$.$$'
-                inputMode='numeric'
+                inputMode='decimal'
                 pattern='[0-9]*'
                 min={0.01}
                 max={9999999}
@@ -106,7 +106,7 @@ const handleCancelExpense = (e) => {
               />
               <input
                 type='text'
-                className='w-1/3 h-10 px-2 border rounded-md outline-none placeholder:text-sm placeholder:italic'
+                className='w-1/2 h-auto px-2 border-b outline-none border-fuchsia-900 placeholder:text-sm placeholder:italic'
                 placeholder='State'
                 minLength={1}
                 maxLength={2}
@@ -114,8 +114,16 @@ const handleCancelExpense = (e) => {
                 onChange={(e) => setTxState(e.target.value)}
               />
             </div>
-
-            <div className='flex items-center justify-center w-full h-auto gap-3'>
+            <div className='flex justify-center w-full'>
+              <textarea
+                cols='10'
+                rows='8'
+                className='w-3/4 h-20 border outline-none lg:h-40'
+                value={tx_desc}
+                onChange={(e) => setTxDesc(e.target.value)}
+              />
+            </div>
+            <div className='flex items-center justify-center w-full h-48 gap-3'>
               <div className='flex flex-col w-1/2 h-full'>
                 <h2
                   className='py-2 text-sm text-center text-white rounded-md shadow-md cursor-pointer bg-fuchsia-900'
@@ -127,7 +135,7 @@ const handleCancelExpense = (e) => {
                   </span>
                 </h2>
                 {txDoneModal && (
-                  <div className='flex flex-col items-center justify-center w-full h-full border-b rounded-sm'>
+                  <div className='flex flex-col items-center justify-center w-full h-full rounded-sm'>
                     <span className='relative flex items-center justify-center w-full py-2 border-b cursor-pointer'>
                       <p
                         className='w-full text-sm font-semibold text-center text-slate-700'
@@ -185,7 +193,7 @@ const handleCancelExpense = (e) => {
                   </span>
                 </h2>
                 {tx_statusModal && (
-                  <div className='flex flex-col items-center justify-start w-full h-full border-b rounded-sm'>
+                  <div className='flex flex-col items-center justify-start w-full h-full rounded-sm'>
                     <span
                       className='relative flex items-center justify-center w-full py-2 border-b cursor-pointer'
                       onClick={() => {
@@ -221,15 +229,7 @@ const handleCancelExpense = (e) => {
               </div>
             </div>
           </div>
-          <div className='flex justify-center w-full'>
-            <textarea
-              cols='10'
-              rows='8'
-              className='w-3/4 border outline-none'
-              value={tx_desc}
-              onChange={(e) => setTxDesc(e.target.value)}
-            />
-          </div>
+
           <h2 className='text-center text-black'>
             {successMsg
               ? 'Successfully Added Expense!'
