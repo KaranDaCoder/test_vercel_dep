@@ -21,15 +21,15 @@ const Dashboard = async () => {
   return (
     <div className='w-1/2 border'>
       <h1>Dashboard - {data?.message[0]?.tx_amount}</h1>
-      <div className='flex flex-col'>
+      {data?.message && <div className='flex flex-col'>
         {data.message.map((exp) => (
-          <div className='flex justify-around w-full'>
-            <span>{exp.tx_name}</span>
-            <span>{exp.tx_date}</span>
-            <span>{exp.tx_amount}</span>
+          <div className='flex justify-around w-full' key={exp._id}>
+            <span>{exp?.tx_name}</span>
+            <span>{exp?.tx_date}</span>
+            <span>{exp?.tx_amount}</span>
           </div>
         ))}
-      </div>
+      </div>}
       <Link href={'/add'}>ADD</Link>
     </div>
   );
