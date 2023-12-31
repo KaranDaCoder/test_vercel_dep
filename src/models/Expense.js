@@ -10,10 +10,6 @@ const ExpenseSchema = new Schema(
       type: Date,
       required: true,
     },
-    tx_amount: {
-      type: Number,
-      required: true,
-    },
     tx_state: {
       type: String,
       required: true,
@@ -44,10 +40,6 @@ const ExpenseSchema = new Schema(
       type: Number,
       get: (v) => (v / 100).toFixed(2),
       set: (v) => v * 100,
-    },
-    tx_date: {
-      type: Date,
-      required: [true, 'Problem! Transaction Date cannot be empty'],
     },
     tx_category: {
       type: String,

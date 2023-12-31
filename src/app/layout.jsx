@@ -1,9 +1,12 @@
 import { Inter } from 'next/font/google'
+import { Nunito_Sans, Roboto } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/navbar/Navbar'
 import Footer from '@/components/footer/Footer'
 
 const inter = Inter({ subsets: ['latin'] })
+const nunito = Nunito_Sans({subsets: ['latin'] , weight:['200', '300', '400' , '500', '600', '700']})
+const roboto = Roboto({subsets: ['latin'] , weight:['100', '300', '400' , '500', '700']})
 
 export const metadata = {
   title: 'Create Next App',
@@ -12,12 +15,14 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} flex flex-col h-screen w-full overflow-x-hidden justify-between`}>
-        <Navbar/>
+    <html lang='en'>
+      <body
+        className={`${roboto.className} flex flex-col min-h-screen w-full overflow-x-hidden justify-between antialiased`}
+      >
+        <Navbar />
         {children}
-        <Footer/>
-        </body>
+        <Footer />
+      </body>
     </html>
-  )
+  );
 }

@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { ChevronDown, ChevronUp } from '@/components/svgs/AllSvgs';
 import { useRouter } from 'next/navigation';
-
+import categories from '@/utils/categories';
 
 
 
@@ -15,7 +15,7 @@ const Add = () => {
  const [tx_name, setTxName] = useState('');
  const [tx_date, setDate] = useState('');
  const [tx_amount, setAmount] = useState(Number);
- const [tx_state, setTxState] = useState('');
+ const [tx_state, setTxState] = useState('MN');
  const [tx_paid, setTxPaid] = useState('Capital One Ending 3344');
  const [tx_status, setTxStatus] = useState('Completed');
  const [tx_desc, setTxDesc] = useState('');
@@ -37,20 +37,29 @@ const handleCancelExpense = (e) => {
  
 }
 
-const grooming = ['great clips', 'haircut' , 'sp'];
-const grocery = ['poornanand Foods', 'poornanand' , 'Indian Store' , 'Walmart'];
 
 const updateCategory = (e) => {
- setTxName(e.target.value)
- if (grooming.includes(e.target.value)) {
-   setTxCategory('grooming');
- } else if (grocery.includes(e.target.value)) {
-   setTxCategory('grocery');
- } else {
-   setTxCategory('other');
- }
-  console.log(e.target.value)
+  
+  setTxName(e.target.value);
+  const { travel, grocery } = categories;
+
+  grocery.map((tx) => {
+    console.log(e.target.value)
+    if (
+      e.target.value.toString().replaceAll(' ', '').includes(tx)) {
+      console.log(`${tx} ---- ${[grocery]}`);
+      setTxCategory('grocery');
+    }
+  });
+  travel.map((tx) => {
+    if (e.target.value.toString().replaceAll(' ', '').includes(tx)) {
+      console.log(`${tx} ---- ${travel}`);
+      setTxCategory('travel');
+    }
+  });
+  
 }
+
  const handleAddExpense = async (e) => {
   e.preventDefault();
    const create_expense_obj = {
@@ -137,6 +146,7 @@ const updateCategory = (e) => {
                 minLength={1}
                 maxLength={2}
                 value={tx_state}
+                onFocus={() => setTxState('')}
                 onChange={(e) => setTxState(e.target.value)}
               />
             </div>

@@ -1,38 +1,42 @@
+'use client';
+import ExpenseCard from '@/components/expensecard/ExpenseCard';
 import Link from 'next/link';
-import React from 'react'
+// import React, { useState } from 'react'
 
-const Dashboard = async () => {
- const fetchAllPosts = async() => {
+const fetchAllPosts = async () => {
   try {
-   const request = await fetch(
-     `${process.env.NEXTAUTH_URL}/api/expenses`,
-     {
-       cache: 'no-store',
-     }
-   );
-   const resp = await request.json();
-   return resp;
+    const request = await fetch(`${process.env.NEXTAUTH_URL}/api/expenses`, {
+      cache: 'no-store',
+    });
+    const resp = await request.json();
+    return resp;
   } catch (error) {
-   console.log(error);
+    console.log(error);
   }
- }
- const data = await fetchAllPosts();
- console.log(data)
+};
+const Dashboard = () => {
   return (
-    <div className='w-1/2 border'>
-      <h1>Dashboard - {data?.message[0]?.tx_amount}</h1>
-      {data?.message && <div className='flex flex-col'>
-        {data.message.map((exp) => (
-          <div className='flex justify-around w-full' key={exp._id}>
-            <span>{exp?.tx_name}</span>
-            <span>{exp?.tx_date}</span>
-            <span>{exp?.tx_amount}</span>
-          </div>
-        ))}
-      </div>}
+    <div className='w-full h-full'>
+      <div className='flex flex-col items-center w-full h-full bg-slate-50'>
+        <div className='flex flex-col w-5/6 gap-4'>
+          <ExpenseCard />
+          <ExpenseCard />
+          <ExpenseCard />
+          <ExpenseCard />
+          <ExpenseCard />
+          <ExpenseCard />
+          <ExpenseCard />
+          <ExpenseCard />
+          <ExpenseCard />
+          <ExpenseCard />
+          <ExpenseCard />
+          <ExpenseCard />
+        </div>
+      </div>
+
       <Link href={'/add'}>ADD</Link>
     </div>
   );
-}
+};
 
-export default Dashboard
+export default Dashboard;
